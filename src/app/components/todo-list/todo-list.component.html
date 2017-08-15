@@ -1,0 +1,10 @@
+<div class="todo-list container-fluid"  class="col-lg-6">
+    <add-task (onAddNewTaskHandler)="getList()"></add-task>
+    <div class="">
+      <ul class="list-group">
+        <li *ngFor="let task of list; let i = index" class="list-group-item">
+          <task [taskData]="task" [index]="i" (onTaskChangeHandler)="getList()"></task>
+        </li>
+      </ul>
+    </div>
+</div>
