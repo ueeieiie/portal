@@ -1,6 +1,6 @@
-<div class="container-fluid">
-  <ul class="navbar-nav">
-    <li class="nav-item" *ngFor="let link of links">
+<div class="navbar navbar-toggleable-* navbar-light container-fluid" role="navigation">
+  <ul class="navbar-nav ">
+    <li class="nav-item " *ngFor="let link of links">
       <a [routerLink]="link.route" class="nav-link"> {{link.title}} </a>
     </li>
   </ul>

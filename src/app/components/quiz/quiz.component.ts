@@ -9,23 +9,24 @@ import { DataService } from '../../services/DataService/data.service';
 import { ModalService } from '../../services/ModalService/modal.service';
 
 @Component({
-  selector: 'quiz',
-  templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
+	selector: 'quiz',
+	templateUrl: './quiz.component.html',
+	styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-	quizData;
 	
-  constructor( 
+	quizData;
+
+	constructor (
 		private dataService: DataService,
 		private router: Router,
 		private modalService: ModalService
-  ) { }
+	) { }
 
-  ngOnInit() {
-    this.dataService.getQuizData().subscribe( data => {
+	ngOnInit() {
+		this.dataService.getQuizData().subscribe(data => {
 			this.quizData = data;
-		});		
+		});
 	}
 
 	/**
@@ -34,43 +35,32 @@ export class QuizComponent implements OnInit {
 	 * 1. popup a modal with the result of the quiz
 	 * 2. navigate the user back to "Home" screen
 	 */
-  getScore(){	
-		let totalCorrect = this.quizData.questions.reduce((sum, {selected, correct})=>{
-			if( selected == correct ){
+	getScore() {
+		let totalCorrect = this.quizData.questions.reduce((sum, { selected, correct }) => {
+			if (selected == correct) {
 				return sum + 1;
 			}
 			return sum;
 		}, 0);
 
-		this.resetCurrentQuestion();		
+		this.resetCurrentQuestion();
 		this.resetSelectedAnswers();
-		
+
 		this.modalService.alert(
 			`You succeeded with ${totalCorrect} out of ${this.quizData.questions.length},
 			Your score is ${totalCorrect / this.quizData.questions.length * 100}`
-		).subscribe(value => ()=> {}, err => ()=>{});
-
-		/*
-		.subscribe(res => {
-			// modal - click or to try again
-			// restart quiz
-		}, dismiss => {
-			// route to home
-		});
-
-		*/
-
-		// setTimeout(() => {
-		// 	this.router.navigate(['/home']);
-		// },4000)
+		).subscribe(
+			data => this.router.navigate(['/quiz']),
+			err => this.router.navigate(['/home'])
+		);
 	}
-	
+
 	/**
 	 * resetCurrentQuestion() method:
 	 * 
 	 * resets the currenQuestion data
 	 */
-	resetCurrentQuestion(){
+	resetCurrentQuestion() {
 		this.quizData.currentQuestion = 0;
 	}
 
@@ -79,10 +69,9 @@ export class QuizComponent implements OnInit {
 	 * 
 	 * resets the selected answers in the quizData
 	 */
-  resetSelectedAnswers(){
-	  this.quizData.questions.forEach(question => {
-		  question.selected = null;
+	resetSelectedAnswers() {
+		this.quizData.questions.forEach(question => {
+			question.selected = null;
 		});
-  }
-
+	}
 }
