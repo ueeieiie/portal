@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 	<div class="modal-header">
 		<h4 class="modal-title">Hi there!</h4>
-		<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('dismiss')">
 		<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 	</div>
 
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Ok</button>
+		<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('play')">Ok</button>
 	</div>
   `,
 })

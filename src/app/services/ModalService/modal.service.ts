@@ -16,21 +16,43 @@ export class ModalService{
      * this triggers a modal at the end of the game
      * @param {String} content 
      */
-    alert(content: string){          
-        return new Observable((observer) => {
-            const modalRef = this.ngbModal.open(ModalContentComponent);
-            modalRef.componentInstance.score = content; 
-            modalRef.result.then(
-                res => {
-                    observer.next();
-                    observer.complete();
-                },
-                err => {
-                    observer.error();
-                });
-        });
+    alert(subject, content){          
+        const modalRef = this.ngbModal.open(ModalContentComponent);
+        modalRef.componentInstance.score = content; 
+
+        modalRef.result.then(
+            (ok)=>{
+                subject.next(ok);
+                subject.complete();
+            },
+            (dismiss) => {
+                subject.error(dismiss);
+            }
+        )
+        
+        
+        // return subject.subscribe({
+        //     next: function(content){
+        //     },
+        //     error: function(err){
+        //         console.log('error:' , err)
+        //     }
+        // })
+        
     }
 }
 
 
 
+// return new Observable((observer) => {
+//     const modalRef = this.ngbModal.open(ModalContentComponent);
+//     modalRef.componentInstance.score = content; 
+//     modalRef.result.then(
+//         res => {
+//             observer.next();
+//             observer.complete();
+//         },
+//         err => {
+//             observer.error();
+//         });
+// });
