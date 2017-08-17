@@ -29,16 +29,8 @@ export class ModalService{
                 subject.error(dismiss);
             }
         )
-        
-        
-        // return subject.subscribe({
-        //     next: function(content){
-        //     },
-        //     error: function(err){
-        //         console.log('error:' , err)
-        //     }
-        // })
-        
+
+        return subject;
     }
 }
 

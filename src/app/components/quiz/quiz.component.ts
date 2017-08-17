@@ -52,9 +52,7 @@ export class QuizComponent implements OnInit {
 		this.resetSelectedAnswers();
 
 		let subject = new Subject();
-		this.modalService.alert(subject, quizFinalMessage);
-		
-		subject.subscribe(
+		this.modalService.alert(subject, quizFinalMessage).subscribe(
 			(val) => {
 				this.router.navigate(['/quiz']);
 			},

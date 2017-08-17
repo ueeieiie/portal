@@ -16,15 +16,15 @@
             </li>
         </ul>
 
-        <button [disabled]="quizData.currentQuestion == 0"
+        <button class="btn btn-primary" [disabled]="quizData.currentQuestion == 0"
                 (click)="quizData.currentQuestion = quizData.currentQuestion - 1">
             Prev
         </button>
-        <button [hidden]="quizData.currentQuestion == quizData.questions.length - 1"
+        <button class="btn btn-primary" [hidden]="quizData.currentQuestion == quizData.questions.length - 1"
                 (click)="quizData.currentQuestion = quizData.currentQuestion + 1">
             Next
         </button>
-        <button (click)="getScore()"
+        <button class="btn btn-primary" (click)="getScore()"
                 [hidden]="quizData.currentQuestion !== quizData.questions.length - 1">
             Done
         </button>
