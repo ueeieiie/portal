@@ -2,7 +2,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 // Services
-import { LocalStorageService } from '../LocalStorageService/localStroage.service'
+import { LocalStorageService } from '../LocalStorageService/localStroage.service';
+import { EventService } from '../EventService/event.service';
 
 @Injectable()
 export class DataService {
@@ -37,7 +38,10 @@ export class DataService {
 		]
 	};
 
-constructor(private localStorageService: LocalStorageService) { }
+constructor(
+	private localStorageService: LocalStorageService,
+	private eventService: EventService
+) { }
 
 /**
  * getQuizData() method:
@@ -46,10 +50,12 @@ constructor(private localStorageService: LocalStorageService) { }
  * @return {Observable}
  */
 getQuizData(){
+	this.eventService.trigger('LOADING', true);
 	return new Observable(observer => {
 		setTimeout(() => {
 			observer.next(this.quizData);
 			observer.complete();
+			this.eventService.trigger('LOADING', false);
 		}, 500)
 	});
 }
@@ -62,10 +68,12 @@ getQuizData(){
  * @return {Observable} 
  */
 get(){
+	this.eventService.trigger('LOADING', true);
 	return new Observable(observer => {
 		setTimeout(() => {
 			observer.next(this.localStorageService.get('list') || []);
 			observer.complete();
+			this.eventService.trigger('LOADING', false);
 		}, 500);
 	});
 }
@@ -85,18 +93,6 @@ add(task){
 		this.localStorageService.set('list', list);
 		return Observable.of(true);
 	});
-
-	// return new Observable(observer => {
-	//   setTimeout(() => {        
-	//     this.get().subscribe((data: any) => {
-	//       let list = data
-	//       list.push(task);
-	//       this.localStorageService.set('list', list);
-	//       observer.next();
-	//     });
-
-	//   }, 500);
-	// });
 }
 
 /**

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from './services/DataService/data.service';
 import { LocalStorageService } from './services/LocalStorageService/localStroage.service';
 import { ModalService } from './services/ModalService/modal.service';
+import { EventService } from './services/EventService/event.service';
 
 // NG-Bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +26,7 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { QuizComponent } from './components/quiz/quiz.component';
 import { ModalContentComponent } from './components/modal-content/modal-content.component';
 import { TestingComponent } from './components/testing/testing.component';
+import { BusyIndicatorComponent } from './components/busy-indicator/busy-indicator.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { TestingComponent } from './components/testing/testing.component';
     QuizComponent,
     ModalContentComponent,
     TestingComponent,
+    BusyIndicatorComponent,
   ],
   imports: [
     routes,
@@ -48,7 +51,7 @@ import { TestingComponent } from './components/testing/testing.component';
     FormsModule
   ],
   entryComponents: [ModalContentComponent],
-  providers: [DataService, LocalStorageService, ModalService],
+  providers: [DataService, LocalStorageService, ModalService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
