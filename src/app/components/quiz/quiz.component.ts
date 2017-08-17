@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -7,6 +6,7 @@ import { Router } from '@angular/router';
 
 // Services
 import { DataService } from '../../services/DataService/data.service';
+import { EventService } from '../../services/EventService/event.service';
 import { ModalService } from '../../services/ModalService/modal.service';
 
 @Component({
@@ -20,14 +20,13 @@ export class QuizComponent implements OnInit {
 
 	constructor (
 		private dataService: DataService,
+		private modalService: ModalService,
+		private eventService: EventService,
 		private router: Router,
-		private modalService: ModalService
 	) { }
 
 	ngOnInit() {
-		this.dataService.getQuizData().subscribe(data => {
-			this.quizData = data;
-		});
+		this.dataService.getQuizData().subscribe(data => {this.quizData = data});
 	}
 
 	/**
@@ -37,8 +36,8 @@ export class QuizComponent implements OnInit {
 	 * 2. navigate the user back to "Home" screen
 	 */
 	getScore() {
-		let totalCorrect = this.quizData.questions
-			.reduce((sum, { selected, correct }) => {
+		let totalCorrect = 
+			this.quizData.questions.reduce((sum, { selected, correct }) => {
 				if (selected == correct) {
 					return sum + 1;
 				}
@@ -51,18 +50,23 @@ export class QuizComponent implements OnInit {
 		this.resetCurrentQuestion();
 		this.resetSelectedAnswers();
 
-		let subject = new Subject();
-		this.modalService.alert(subject, quizFinalMessage);
-		
-		subject.subscribe(
-			(val) => {
-				this.router.navigate(['/quiz']);
-			},
-			(err) => {
+		this.eventService.observe('ON_RESULT_QUIZ_MODAL_CLOSED').subscribe(val => {
+			if(val.isDismiss){
 				this.router.navigate(['/home']);
-			},
-			() => console.log('success')
-		);
+			} else {
+				this.router.navigate(['/quiz']);
+			}
+		});
+
+		this.modalService.alert(quizFinalMessage);
+
+			// this.modalService.alert(quizFinalMessage).subscribe(res => {
+		// 	if(res.isDismiss){
+		// 		this.router.navigate(['/home']);
+		// 	} else {
+		// 		this.router.navigate(['/quiz']);
+		// 	}
+		// });
 	}
 
 	/**
@@ -85,3 +89,34 @@ export class QuizComponent implements OnInit {
 		});
 	}
 }
+
+
+
+
+
+
+
+
+
+
+// this.eventService.emit('modalAlert', quizFinalMessage).subscribe(
+		// 	(val) => { 
+		// 		console.log('value:', val)
+		// 		this.router.navigate(['/quiz']) 
+		// 	},
+		// 	(err) => { 
+		// 		console.log('error:', err)				
+		// 		this.router.navigate(['/home']) 
+		// 	},
+		// 	() => { 
+		// 		console.log('success') 
+		// 	}
+		// );
+
+
+
+
+		// this.eventService.emit('modalAlert', this.modalService.alert, quizFinalMessage);
+		// this.eventService.callEvent('modalAlert').subscribe((subject) => {
+		// 	this.modalService.alert(subject);
+		// });

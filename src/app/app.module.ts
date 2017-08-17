@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { DataService } from './services/DataService/data.service';
 import { LocalStorageService } from './services/LocalStorageService/localStroage.service';
 import { ModalService } from './services/ModalService/modal.service';
+import { EventService } from './services/EventService/event.service';
 
 // NG-Bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -48,7 +49,7 @@ import { TestingComponent } from './components/testing/testing.component';
     FormsModule
   ],
   entryComponents: [ModalContentComponent],
-  providers: [DataService, LocalStorageService, ModalService],
+  providers: [DataService, LocalStorageService, ModalService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
