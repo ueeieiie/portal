@@ -3,20 +3,20 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class EventService {
-  
+
     constructor(){}
 
-    events = {};
+    private events = {};
 
-    observe(eventName){
+    public observe(eventName){
         return this.getEvent(eventName);
     }
 
-    trigger(eventName, data?){        
+    public trigger(eventName, data?){
         this.getEvent(eventName).next(data);
     }
 
-    getEvent(eventName){
+    private getEvent(eventName){
         if (!this.events[eventName]){
             this.events[eventName] = new Subject();
         }

@@ -7,28 +7,22 @@ import { EventService } from '../EventService/event.service';
 @Injectable()
 export class BusyIndicatorService {
 
-    isLoading = {
+    data = {
         counter:0,
+        isLoading: false,
         errors: []
     }
 
     constructor( private eventService: EventService ){ }
 
-    setBusyIndicatorState(state){
-        if(state == true){
-            this.isLoading.counter += 1;
-        } else if(state == false) {
-            this.isLoading.counter -= 1;
-        } else {
-            console.log('error');
-        }
+    incremetnt(){
+        this.data.counter++;
+        this.eventService.trigger('LOADING', this.data.counter)
     }
 
-    getBusyIndicatorsState(subject){
-        if(this.isLoading.counter !== 0){
-            subject.next(true);
-        } else {
-            subject.next(false);
-        }
+
+    decrement(){
+        this.data.counter--;
+        this.eventService.trigger('LOADING', this.data.counter)
     }
 }

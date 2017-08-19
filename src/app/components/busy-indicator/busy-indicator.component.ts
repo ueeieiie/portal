@@ -17,13 +17,12 @@ export class BusyIndicatorComponent implements OnInit {
 
     ngOnInit() {
         this.eventService.observe('LOADING').subscribe(
-            val =>{
-                this.busyIndicatorService.setBusyIndicatorState( val );
-
-                let subject = new Subject();
-                subject.subscribe((val: boolean) => this.isLoading = val);
-
-                this.busyIndicatorService.getBusyIndicatorsState(subject);
+            val => {
+                if(val !== 0){
+                    this.isLoading = true;
+                } else {
+                    this.isLoading = false;
+                }
             }
         );
     }

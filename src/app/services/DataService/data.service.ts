@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 // Services
 import { LocalStorageService } from '../LocalStorageService/localStroage.service';
 import { EventService } from '../EventService/event.service';
+import { BusyIndicatorService } from '../BusyIndicatorService/busyIndicator.service';
 
 @Injectable()
 export class DataService {
@@ -40,7 +41,8 @@ export class DataService {
 
 constructor(
 	private localStorageService: LocalStorageService,
-	private eventService: EventService
+    private eventService: EventService,
+    private busyIndicatorService: BusyIndicatorService
 ) { }
 
 /**
@@ -50,13 +52,13 @@ constructor(
  * @return {Observable}
  */
 getQuizData(){
-	this.eventService.trigger('LOADING', true);
+    this.busyIndicatorService.incremetnt();
 	return new Observable(observer => {
 		setTimeout(() => {
 			observer.next(this.quizData);
 			observer.complete();
-			this.eventService.trigger('LOADING', false);
-		}, 1500)
+			this.busyIndicatorService.decrement();
+		}, 500)
 	});
 }
 
@@ -68,13 +70,13 @@ getQuizData(){
  * @return {Observable}
  */
 get(){
-	this.eventService.trigger('LOADING', true);
+    this.busyIndicatorService.incremetnt();
 	return new Observable(observer => {
 		setTimeout(() => {
 			observer.next(this.localStorageService.get('list') || []);
 			observer.complete();
-			this.eventService.trigger('LOADING', false);
-		}, 1500);
+            this.busyIndicatorService.decrement();
+		}, 500);
 	});
 }
 
