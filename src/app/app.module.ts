@@ -7,6 +7,7 @@ import { DataService } from './services/DataService/data.service';
 import { LocalStorageService } from './services/LocalStorageService/localStroage.service';
 import { ModalService } from './services/ModalService/modal.service';
 import { EventService } from './services/EventService/event.service';
+import { BusyIndicatorService } from './services/BusyIndicatorService/busyIndicator.service';
 
 // NG-Bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -51,7 +52,7 @@ import { BusyIndicatorComponent } from './components/busy-indicator/busy-indicat
     FormsModule
   ],
   entryComponents: [ModalContentComponent],
-  providers: [DataService, LocalStorageService, ModalService, EventService],
+  providers: [DataService, LocalStorageService, ModalService, EventService, BusyIndicatorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

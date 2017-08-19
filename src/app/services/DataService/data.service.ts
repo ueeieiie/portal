@@ -45,7 +45,7 @@ constructor(
 
 /**
  * getQuizData() method:
- * 
+ *
  * returns Observable of the quizData data
  * @return {Observable}
  */
@@ -56,16 +56,16 @@ getQuizData(){
 			observer.next(this.quizData);
 			observer.complete();
 			this.eventService.trigger('LOADING', false);
-		}, 500)
+		}, 1500)
 	});
 }
 
 /**
  * get() method:
  *
- * 1. call localStorageService to get the list 
+ * 1. call localStorageService to get the list
  * 2. sends the list to whoever called it
- * @return {Observable} 
+ * @return {Observable}
  */
 get(){
 	this.eventService.trigger('LOADING', true);
@@ -74,17 +74,17 @@ get(){
 			observer.next(this.localStorageService.get('list') || []);
 			observer.complete();
 			this.eventService.trigger('LOADING', false);
-		}, 500);
+		}, 1500);
 	});
 }
 
 /**
  * add() method:
- * 
- * 1. get the list from the localStorageService 
+ *
+ * 1. get the list from the localStorageService
  * 2. adds a new task to the list
- * @param {Object} task 
- * @return {Observable} 
+ * @param {Object} task
+ * @return {Observable}
  */
 add(task){
 	return this.get().flatMap((data: any[]) => {
@@ -97,10 +97,10 @@ add(task){
 
 /**
  * remove() method:
- * 1. get the list from the localStorageService  
+ * 1. get the list from the localStorageService
  * 2 removes the indexed task from the list
- * @param {Number} index 
- * @return {Observable} 
+ * @param {Number} index
+ * @return {Observable}
  */
 remove(index){
 	return new Observable(observer => {
@@ -118,11 +118,11 @@ remove(index){
 
 /**
  * edit() method:
- * 1. get the list from the localStorageService 
+ * 1. get the list from the localStorageService
  * 2. edits the indexed task and assign to it a new text
- * @param {Number} index 
- * @param {String} editedTask 
- * @return {Observable} 
+ * @param {Number} index
+ * @param {String} editedTask
+ * @return {Observable}
  */
 edit(index, editedTask){
 	return new Observable(observer => {
@@ -140,12 +140,12 @@ edit(index, editedTask){
 
 /**
  * toggleCompleted() method:
- * 1. get the list from the localStorageService  
+ * 1. get the list from the localStorageService
  * 2. toggles the task's "isComplete" state
- * @param {Number} index 
- * @return {Observable} 
+ * @param {Number} index
+ * @return {Observable}
  */
-toggleCompleted(index){  
+toggleCompleted(index){
 	return new Observable(observer => {
 		setTimeout(() => {
 			this.get().subscribe((data: any) => {
